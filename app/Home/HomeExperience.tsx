@@ -18,9 +18,17 @@ export function HomeExperience() {
   const [showSplash, setShowSplash] = useState(true);
   const [leaving, setLeaving] = useState(false);
   const [view, setView] = useState<View>("home");
+
   const closingRef = useRef<HTMLElement | null>(null);
   const footerRef = useRef<HTMLElement | null>(null);
   const endRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (showSplash) return;
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [view, showSplash]);
 
   useEffect(() => {
     if (showSplash || view !== "home") return;
@@ -53,25 +61,10 @@ export function HomeExperience() {
     window.setTimeout(() => setShowSplash(false), 520);
   };
 
-  const openFutureFog = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setView("futureFog");
-  };
-
-  const openSummary = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setView("summary");
-  };
-
-  const backHome = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setView("home");
-  };
-
-  const backToQuestions = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setView("futureFog");
-  };
+  const openFutureFog = () => setView("futureFog");
+  const openSummary = () => setView("summary");
+  const backHome = () => setView("home");
+  const backToQuestions = () => setView("futureFog");
 
   if (showSplash) {
     return <SplashScreen leaving={leaving} onContinue={continueFromSplash} />;

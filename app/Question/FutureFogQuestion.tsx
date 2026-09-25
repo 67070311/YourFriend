@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { journeyNodes, START_NODE_ID } from "./questionData";
 import styles from "./futureFog.module.css";
 
@@ -50,6 +50,11 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
   const isFlashlightPage = node.id === "branch-a" || node.id === "branch-b" || node.id === "branch-c";
   const sceneImage = imageForNode(node.id, node.stepLabel);
   const useLightPrompt = node.stepLabel.startsWith("2");
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [currentNodeId]);
 
   const goToNode = (nextId: string) => {
     setHistory((previous) => [...previous, currentNodeId]);
