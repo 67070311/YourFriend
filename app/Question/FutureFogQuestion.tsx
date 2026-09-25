@@ -28,7 +28,11 @@ function imageForNode(nodeId: string, stepLabel: string) {
 
 function BearChoiceIcon() {
   return (
-    <svg className={styles.bearChoiceIcon} viewBox="0 0 36 36" aria-hidden="true">
+    <svg
+      className={styles.bearChoiceIcon}
+      viewBox="0 0 36 36"
+      aria-hidden="true"
+    >
       <circle cx="10" cy="10" r="5" className={styles.bearEar} />
       <circle cx="26" cy="10" r="5" className={styles.bearEar} />
       <circle cx="18" cy="19" r="12" className={styles.bearHead} />
@@ -36,7 +40,10 @@ function BearChoiceIcon() {
   );
 }
 
-export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps) {
+export function FutureFogQuestion({
+  onBack,
+  onSummary,
+}: FutureFogQuestionProps) {
   const [currentNodeId, setCurrentNodeId] = useState(START_NODE_ID);
   const [history, setHistory] = useState<string[]>([]);
   const [answers, setAnswers] = useState<Record<string, string>>({});
@@ -47,9 +54,29 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
   const isClosing = node.id === "closing";
   const isEncourageMore = node.id === "encourage-more";
   const isFirstQuestion = node.id === "future-fog";
-  const isFlashlightPage = node.id === "branch-a" || node.id === "branch-b" || node.id === "branch-c";
+  const isFlashlightPage =
+    node.id === "branch-a" || node.id === "branch-b" || node.id === "branch-c";
   const sceneImage = imageForNode(node.id, node.stepLabel);
   const useLightPrompt = node.stepLabel.startsWith("2");
+
+  useEffect(() => {
+    const preloadSources = [
+      "/question/start-page.png",
+      "/question/2.1.png",
+      "/question/2.1.1.png",
+      "/question/2.2.png",
+      "/question/2.3.png",
+      "/question/more-question.png",
+      "/question/end-page.png",
+      "/summary/hero.png",
+    ];
+
+    preloadSources.forEach((src) => {
+      const image = new window.Image();
+      image.decoding = "async";
+      image.src = src;
+    });
+  }, []);
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
     document.documentElement.scrollTop = 0;
@@ -59,7 +86,6 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
   const goToNode = (nextId: string) => {
     setHistory((previous) => [...previous, currentNodeId]);
     setCurrentNodeId(nextId);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleBack = () => {
@@ -105,10 +131,15 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
         </header>
 
         <div className={styles.progressTrack} aria-hidden="true">
-          <span className={styles.progressFill} style={{ width: `${progress}%` }} />
+          <span
+            className={styles.progressFill}
+            style={{ width: `${progress}%` }}
+          />
         </div>
 
-        <div className={`${styles.scene} ${isEncourageMore ? styles.sceneFull : ""}`}>
+        <div
+          className={`${styles.scene} ${isEncourageMore ? styles.sceneFull : ""}`}
+        >
           <Image
             src={sceneImage}
             alt="พี่หมีออกเดินทาง"
@@ -119,16 +150,36 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
           />
           {isFirstQuestion ? (
             <div className={styles.ambientMotes} aria-hidden="true">
-              <span className={`${styles.ambientBug} ${styles.ambientBugOne}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugTwo}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugThree}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugFour}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugFive}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugSix}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugSeven}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugEight}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugNine}`} />
-              <span className={`${styles.ambientBug} ${styles.ambientBugTen}`} />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugOne}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugTwo}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugThree}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugFour}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugFive}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugSix}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugSeven}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugEight}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugNine}`}
+              />
+              <span
+                className={`${styles.ambientBug} ${styles.ambientBugTen}`}
+              />
             </div>
           ) : null}
 
@@ -159,9 +210,15 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
               <span className={`${styles.twinkle} ${styles.twinkleEight}`} />
               <span className={`${styles.twinkle} ${styles.twinkleNine}`} />
               <span className={`${styles.twinkle} ${styles.twinkleTen}`} />
-              <span className={`${styles.shootingStar} ${styles.shootingStarOne}`} />
-              <span className={`${styles.shootingStar} ${styles.shootingStarTwo}`} />
-              <span className={`${styles.shootingStar} ${styles.shootingStarThree}`} />
+              <span
+                className={`${styles.shootingStar} ${styles.shootingStarOne}`}
+              />
+              <span
+                className={`${styles.shootingStar} ${styles.shootingStarTwo}`}
+              />
+              <span
+                className={`${styles.shootingStar} ${styles.shootingStarThree}`}
+              />
             </div>
           ) : null}
 
@@ -169,7 +226,9 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
             <div className={styles.gardenEffects} aria-hidden="true">
               <span className={`${styles.butterfly} ${styles.butterflyOne}`} />
               <span className={`${styles.butterfly} ${styles.butterflyTwo}`} />
-              <span className={`${styles.butterfly} ${styles.butterflyThree}`} />
+              <span
+                className={`${styles.butterfly} ${styles.butterflyThree}`}
+              />
               <span className={`${styles.pollen} ${styles.pollenOne}`} />
               <span className={`${styles.pollen} ${styles.pollenTwo}`} />
               <span className={`${styles.pollen} ${styles.pollenThree}`} />
@@ -187,17 +246,29 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
             className={`${styles.questionOverlay} ${useLightPrompt ? styles.questionOverlayLight : ""} ${isEncourageMore ? styles.questionOverlayCompact : ""} ${isClosing ? styles.questionOverlayCentered : ""}`}
             key={`prompt-${node.id}`}
           >
-            {node.eyebrow ? <p className={styles.eyebrow}>{node.eyebrow}</p> : null}
+            {node.eyebrow ? (
+              <p className={styles.eyebrow}>{node.eyebrow}</p>
+            ) : null}
             <h1>{node.title}</h1>
-            {node.prompt ? <p className={styles.prompt}>{node.prompt}</p> : null}
+            {node.prompt ? (
+              <p className={styles.prompt}>{node.prompt}</p>
+            ) : null}
           </div>
 
           {isEncourageMore ? (
             <div className={styles.floatingNavigation}>
-              <button className={styles.floatingSecondary} type="button" onClick={handleBack}>
+              <button
+                className={styles.floatingSecondary}
+                type="button"
+                onClick={handleBack}
+              >
                 ย้อนกลับ
               </button>
-              <button className={styles.floatingPrimary} type="button" onClick={handleNext}>
+              <button
+                className={styles.floatingPrimary}
+                type="button"
+                onClick={handleNext}
+              >
                 ไปต่อ
               </button>
             </div>
@@ -210,7 +281,8 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
               <div className={styles.choices}>
                 {node.choices.map((choice, index) => {
                   const active = selectedChoiceId === choice.id;
-                  const showLabel = node.showChoiceLabels !== false && choice.label;
+                  const showLabel =
+                    node.showChoiceLabels !== false && choice.label;
 
                   return (
                     <button
@@ -226,9 +298,13 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
                       }
                       aria-pressed={active}
                     >
-                      {showLabel ? <span className={styles.choiceKey}>{choice.label}</span> : null}
+                      {showLabel ? (
+                        <span className={styles.choiceKey}>{choice.label}</span>
+                      ) : null}
                       <span className={styles.choiceText}>{choice.text}</span>
-                      <span className={styles.choiceCheck}>{active ? <BearChoiceIcon /> : null}</span>
+                      <span className={styles.choiceCheck}>
+                        {active ? <BearChoiceIcon /> : null}
+                      </span>
                     </button>
                   );
                 })}
@@ -236,12 +312,20 @@ export function FutureFogQuestion({ onBack, onSummary }: FutureFogQuestionProps)
             ) : null}
 
             <div className={styles.navigation}>
-              <button className={styles.secondaryButton} type="button" onClick={handleBack}>
+              <button
+                className={styles.secondaryButton}
+                type="button"
+                onClick={handleBack}
+              >
                 {history.length === 0 ? "กลับหน้าแรก" : "ย้อนกลับ"}
               </button>
 
               {isClosing ? (
-                <button className={styles.primaryButton} type="button" onClick={onSummary}>
+                <button
+                  className={styles.primaryButton}
+                  type="button"
+                  onClick={onSummary}
+                >
                   ดูผลสรุป
                 </button>
               ) : (
